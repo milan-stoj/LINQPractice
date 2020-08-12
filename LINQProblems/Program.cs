@@ -41,7 +41,7 @@ namespace LINQProblems
 
         static List<string> RemoveDuplicates(List<string> wordsToDistinct)
         {
-            throw new NotImplementedException();
+            return wordsToDistinct.Distinct().ToList();
         }
 
         static int AverageDroppedLowest(List<string> gradesToAverage)
