@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.PerformanceData;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -31,7 +32,6 @@ namespace LINQProblems
             /* Problem 4: Return an alphabetically ordered string corresponding to the letter frequency of the passed string. */
             string test = "Terrill";
             string frequency = AnalyzeFrequency(test);
-
         }
 
         static List<string> WordsTh(List<string> wordsToCheck)
@@ -46,17 +46,25 @@ namespace LINQProblems
 
         static double AverageDroppedLowest(List<string> gradesToAverage)
         {
-            var step1 = gradesToAverage.Select(s => s.Split(','));
-            var step2 = step1.Select(s => s.ToList()).Select(s => s.Select(int.Parse));
-            var step3 = step2.Select(s => s.OrderBy(n => n).ToList()).ToList();
-            step3.ForEach(s => s.RemoveAt(0));
-            return step3.Select(s => s.Average()).ToList().Average();
+            var splitGrades = gradesToAverage.Select(s => s.Split(','));
+            var convertedGrades = splitGrades.Select(s => s.ToList()).Select(s => s.Select(int.Parse));
+            var orderedGrades = convertedGrades.Select(s => s.OrderBy(n => n).ToList()).ToList();
+            orderedGrades.ForEach(s => s.RemoveAt(0));
+            return orderedGrades.Select(s => s.Average()).ToList().Average();
         }
 
         static string AnalyzeFrequency(string wordsToCheck)
         {
-            throw new NotImplementedException();
+            var wordInList = wordsToCheck.ToUpper().ToList();
+            var distinctList = wordInList.Distinct();
+            var orderedList = distinctList.OrderBy(c => c).ToList();
+            string frequency = default;
+            foreach (char distinct in orderedList)
+            {
+                int count = wordInList.Count(c => c == orderedList[orderedList.IndexOf(distinct)]);
+                frequency += $"{orderedList[orderedList.IndexOf(distinct)]}{count}";
+            }
+            return frequency;
         }
-
     }
 }
