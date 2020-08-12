@@ -36,7 +36,7 @@ namespace LINQProblems
 
         static List<string> WordsTh(List<string> wordsToCheck)
         {
-            throw new NotImplementedException();
+            return wordsToCheck.FindAll(w => w.Contains("th"));
         }
 
         static List<string> RemoveDuplicates(List<string> wordsToDistinct)
