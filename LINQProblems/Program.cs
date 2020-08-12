@@ -26,7 +26,7 @@ namespace LINQProblems
                 "73,88,83,99,64",
                 "98,100,66,74,55"   
                 };
-            int classAverage = AverageDroppedLowest(classGrades);
+            double classAverage = AverageDroppedLowest(classGrades); // == 86.125;
 
             /* Problem 4: Return an alphabetically ordered string corresponding to the letter frequency of the passed string. */
             string test = "Terrill";
@@ -44,9 +44,13 @@ namespace LINQProblems
             return wordsToDistinct.Distinct().ToList();
         }
 
-        static int AverageDroppedLowest(List<string> gradesToAverage)
+        static double AverageDroppedLowest(List<string> gradesToAverage)
         {
-            throw new NotImplementedException();
+            var step1 = gradesToAverage.Select(s => s.Split(','));
+            var step2 = step1.Select(s => s.ToList()).Select(s => s.Select(int.Parse));
+            var step3 = step2.Select(s => s.OrderBy(n => n).ToList()).ToList();
+            step3.ForEach(s => s.RemoveAt(0));
+            return step3.Select(s => s.Average()).ToList().Average();
         }
 
         static string AnalyzeFrequency(string wordsToCheck)
