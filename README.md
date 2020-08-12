@@ -1,0 +1,2 @@
+# LINQPractice
+Practicing LINQ expressions
